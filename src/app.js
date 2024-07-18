@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import { ApiResponse } from "./utils/ApiResponse.js";
+import errorHandler from "./middlewares/errorHandler.js";
 
 const app = express();
 app.use(
@@ -24,5 +25,12 @@ app.on("error", (error) => {
 app.get("/", (req, res) => {
   res.send(new ApiResponse(200, "Welcome to the API"));
 });
+
+import { userRouter } from "./routes/user.router.js";
+import pharmCatRouter from "./utils/generateReport.js";
+
+app.use("/api/users", userRouter);
+app.use("/api/pharmcats", pharmCatRouter);
+app.use(errorHandler);
 
 export default app;
