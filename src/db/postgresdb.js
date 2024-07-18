@@ -1,6 +1,6 @@
 import pgp from "pg-promise";
 import { PG_DB_NAME } from "../constants.js";
-import createTables from "./initPgjs";
+import createTables from "./initPg.js";
 
 const constring = `${process.env.PG_URL}/${PG_DB_NAME}`;
 const db = pgp()(constring);
