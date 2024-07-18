@@ -27,10 +27,9 @@ app.get("/", (req, res) => {
 });
 
 import { userRouter } from "./routes/user.router.js";
-import pharmCatRouter from "./utils/generateReport.js";
 
 app.use("/api/users", userRouter);
-app.use("/api/pharmcats", pharmCatRouter);
+
 app.use(errorHandler);
 
 export default app;
