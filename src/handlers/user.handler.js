@@ -5,7 +5,10 @@ import { hashPassword } from "../utils/hashPassword.js";
 import { db } from "../db/postgresdb.js";
 import { generateReport } from "../utils/generateReport.js";
 import { mongoose } from "../db/mongodb.js";
+
 import fs from "fs";
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
 const registerUser = asyncHandler(async (req, res) => {
   const { first_name, last_name, email, password, birthdate, gender } =
@@ -99,4 +102,41 @@ const generateReportAsync = async (filePath, userId) => {
   }
 };
 
-export { registerUser };
+const login = asyncHandler(async (req, res) => {
+  const { email, password } = req.body;
+  console.log(req.body);
+  // Check if user exists
+  let user;
+  try {
+    user = await db.one('SELECT * FROM users WHERE email = $1', [email]);
+  } catch (err) {
+    console.log(user);
+    console.log(user.password_hash);
+    return res.status(400).json({ message: 'Invalid credentials' });
+  }
+
+  // Check password match
+  const isMatch = await bcrypt.compare(password, user.password_hash);
+  if (!isMatch) {
+    return res.status(400).json({ message: 'Invalid credentials' });
+  }
+
+  // Generate JWT token
+  const payload = {
+    user: {
+      id: user.id,
+    },
+  };
+
+  jwt.sign(
+    payload,
+    process.env.JWT_SECRET,
+    { expiresIn: '1h' },
+    (err, token) => {
+      if (err) throw err;
+      res.json({ token });
+    }
+  );
+});
+
+export { registerUser, login };

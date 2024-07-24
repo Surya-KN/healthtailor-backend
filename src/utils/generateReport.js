@@ -10,7 +10,7 @@ const generateReport = async (filePath) => {
   });
 
   try {
-    const response = await axios.post("http://localhost:8000/analyze", form, {
+    const response = await axios.post("http://127.0.0.1:8000/analyze", form, {
       headers: {
         ...form.getHeaders(),
       },
