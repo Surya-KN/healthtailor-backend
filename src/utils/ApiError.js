@@ -1,12 +1,11 @@
+// ApiError.js
 class ApiError extends Error {
-  constructor(status, message = "Something went wrong", err = [], stack = "") {
+  constructor(statusCode, message, errors = [], stack = "") {
     super(message);
-    this.status = status;
-    this.message = message;
-    this.data = null;
-    this.message = message;
+    this.statusCode = statusCode;
+    this.errors = errors;
     this.success = false;
-    this.errors = err;
+    this.data = null;
 
     if (stack) {
       this.stack = stack;

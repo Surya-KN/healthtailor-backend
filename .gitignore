@@ -120,3 +120,4 @@ dist
 # End of https://mrkandreev.name/snippets/gitignore-generator/#Nodes
 
 pharmcat-microservice/venv
+pharmcat-microservice/env
