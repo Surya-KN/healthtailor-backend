@@ -10,6 +10,7 @@ const createTables = async (db) => {
         birthdate DATE,
         age INT,
         gender VARCHAR(10),
+        username VARCHAR(100),
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
@@ -31,6 +32,10 @@ const createTables = async (db) => {
         user_id INT REFERENCES users(id) ON DELETE CASCADE,
         name VARCHAR(255),
         dosage VARCHAR(100),
+        schedule TIME,
+        stock INT,
+        warning TEXT,
+        drugs TEXT[],
         frequency VARCHAR(100),
         start_date DATE,
         end_date DATE,

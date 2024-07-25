@@ -11,4 +11,13 @@ const connectToMongo = async () => {
   }
 };
 
-export { connectToMongo, mongoose };
+const Report = mongoose.model(
+  "Report",
+  new mongoose.Schema({
+    userId: String,
+    reportData: Object,
+    createdAt: Date,
+  })
+);
+
+export { connectToMongo, mongoose, Report };
